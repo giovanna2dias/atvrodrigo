@@ -70,7 +70,7 @@ routes.get("/produtos", async (req, res) => {
       `;
   } else {
     rows = await sql`
-       select * from produtos
+       select * from produtos as p join fabricante as f on p.id_fabric = f.id_fab;
       `;
   }
   return res.status(200).json(rows);
@@ -98,11 +98,11 @@ routes.post("/cad_produto", async (req, res) => {
   }
 });
 
-routes.delete("/deletar/:id", async (req, res) => {
+routes.delete("/deleta/:id", async (req, res) => {
   try {
     const { id } = req.params;
     await sql`DELETE FROM produtos WHERE id_prod = ${id}`;
-    return res.status(200).json({ message: "Produto deletado" });
+    return res.status(200).json();
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Erro ao deletar produto" });
