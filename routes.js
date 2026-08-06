@@ -116,7 +116,7 @@ routes.put("/editar/:id", async (req, res) => {
      nome_prod, codigo, preco, quantidade, cor, capac, espec, quantidade_min
     } = req.body;
     const resposta =
-      await sql`update produtos set nome_prod = ${nome_prod}, codigo=${codigo}, preco=${preco}, quantidade=${quantidade}, cor=${cor}, capac=${capac}, espec=${espec}, quantidade_min=${quantidade_min} RETURNING *`;
+      await sql`update produtos set nome_prod = ${nome_prod}, codigo=${codigo}, preco=${preco}, quantidade=${quantidade}, cor=${cor}, capac=${capac}, espec=${espec}, quantidade_min=${quantidade_min} where id_prod=${id} RETURNING *`;
     return res.status(201).json(resposta[0]);
   } catch (error) {
     console.error(error);
